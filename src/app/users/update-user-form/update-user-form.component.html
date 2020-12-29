@@ -1,0 +1,88 @@
+<h1 class="title">Edit data</h1>
+<mat-card class="example-card">
+    <form class="example-form" [formGroup]="updateUserForm" novalidate (ngSubmit)="save()">
+        <mat-form-field appearance="standard" class="example-full-width">
+            <mat-label>First name</mat-label>
+            <input matInput formControlName="firstName" placeholder="Your first name" required />
+            <mat-error *ngIf="updateUserForm.get('firstName').hasError('required')"> First name is required </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" class="example-full-width">
+            <mat-label>Last name</mat-label>
+            <input matInput formControlName="lastName" placeholder="Your last name" required />
+            <mat-error *ngIf="updateUserForm.get('lastName').hasError('required')"> Last name is required </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input
+                type="email"
+                matInput
+                formControlName="email"
+                [errorStateMatcher]="matcher"
+                placeholder="Ex. pat@example.com"
+                required
+            />
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error
+                *ngIf="updateUserForm.get('email').hasError('email') && !updateUserForm.get('email').hasError('required')"
+            >
+                Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="updateUserForm.get('email').hasError('required')"> Email is required </mat-error>
+            <mat-error
+                *ngIf="updateUserForm.get('email').touched && updateUserForm.get('email').errors?.emailNotAvailable"
+            >
+                Email address is not available
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" class="example-full-width">
+            <mat-label>Telephone</mat-label>
+            <span matPrefix>+380 &nbsp;</span>
+            <input type="tel" matInput placeholder="99-555-55-77" formControlName="phone" required />
+            <mat-icon matSuffix>phone</mat-icon>
+            <mat-error *ngIf="updateUserForm.get('phone').hasError('required')"> Phone is required </mat-error>
+        </mat-form-field>
+
+        <div class="example-container">
+            <mat-form-field appearance="standard" [ngClass]="updateUserForm.get('country').value.flag ? 'flag' : 'country'">
+                <mat-label>Country</mat-label>
+                <span matPrefix>
+                    <img
+                        src="../../assets/flags/{{ updateUserForm.get('country').value.flag }}"
+                        *ngIf="updateUserForm.get('country').value.flag"
+                        alt=""
+                        class="img-flag"
+                    />
+                    &nbsp;
+                </span>
+                <mat-select formControlName="country" required>
+                    <mat-option *ngFor="let country of countries" [value]="country">
+                        {{ country.name }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="updateUserForm.get('country').hasError('required')"> Please choose an country </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="standard">
+                <mat-label>Gender</mat-label>
+                <mat-select formControlName="gender" required>
+                    <mat-option value="male">male</mat-option>
+                    <mat-option value="female">female</mat-option>
+                </mat-select>
+                <mat-error *ngIf="updateUserForm.get('gender').hasError('required')"> This field is required </mat-error>
+            </mat-form-field>
+        </div>
+
+        <section class="example-section">
+            <mat-checkbox class="example-margin" formControlName="subscribe" [checked]="checked">
+                Subscribe to the newsletter
+            </mat-checkbox>
+        </section>
+
+        <div class="example-button-row">
+            <button type="submit" mat-raised-button color="primary" [disabled]="updateUserForm.invalid">Save</button>
+        </div>
+    </form>
+</mat-card>

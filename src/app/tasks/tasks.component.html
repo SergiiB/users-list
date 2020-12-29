@@ -1,0 +1,18 @@
+<div class="container">
+    <h1>Tasks List</h1>
+    <div class="card" *ngFor="let task of tasksList; let i = index">
+        <a [routerLink]="['/tasks', task.id]" class="task-item__link">
+            <mat-card class="task-item">
+                <span>
+                    <span class="task-item__number">{{ i + 1 }}</span>
+                    <span>{{ task.title }}</span>&nbsp;
+                </span>
+                <span class="example-button-row">
+                    <a mat-button [routerLink]="['/task-update', task.id]" (click)="editTask(task, $event)">Edit</a>
+                    <a mat-button (click)="deleteTask(task, $event)">Delete</a>
+                </span>
+            </mat-card>
+        </a>
+    </div>
+
+</div>

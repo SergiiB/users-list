@@ -1,0 +1,13 @@
+<header>
+    <mat-toolbar color="primary">
+        <mat-toolbar-row>
+            <span>My angular project</span>
+            <span class="example-spacer"></span>
+            <div class="example-button-row">
+                <a mat-button [routerLink]="['/users']" routerLinkActive="active">Users</a>
+                <a mat-button [routerLink]="['/tasks']" routerLinkActive="active">Tasks</a>
+                <a mat-button [routerLink]="['/settings']" routerLinkActive="active">Settings</a>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+</header>

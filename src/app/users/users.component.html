@@ -1,0 +1,24 @@
+<div class="container">
+    <app-add-user-form *ngIf="visibleForm" (responseUser)="responseUser($event)"></app-add-user-form>
+    <h1>Users List</h1>
+    <div class="example-button-row">
+        <button mat-flat-button color="primary" (click)="toggleVisibleForm()">Add user</button>
+    </div>
+    <div class="card" *ngFor="let user of usersList; let i = index">
+        <a [routerLink]="['/users', user.id]" class="user-item__link">
+            <mat-card class="user-item">
+                <span>
+                    <span class="user-item__number">{{ i + 1 }}</span>
+                    <span>{{ user.firstName }}</span>&nbsp;
+                    <span>{{ user.lastName }}</span>
+                </span>
+                <span class="example-button-row">
+                    <a mat-button (click)="addTask(user, $event)">Add task</a>
+                    <a mat-button [routerLink]="['/users', user.id]">Tasks</a>
+                    <a mat-button [routerLink]="['/user-update', user.id]">Edit</a>
+                    <a mat-button (click)="delete(user, $event)">Delete</a> 
+                </span>
+            </mat-card>
+        </a>
+    </div>
+</div>

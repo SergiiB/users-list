@@ -1,0 +1,11 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.mat-button {
+    &.active {
+        color: rgba(0, 0, 0, 0.87);
+    }
+}
+.mat-button-base {
+}

@@ -1,0 +1,47 @@
+<div class="container" *ngIf="user">
+    <h1>{{ user.firstName }} {{ user.lastName }}</h1>
+    <div class="card">
+        <ul>
+            <li>
+                First name: <b>{{ user.firstName }}</b>
+            </li>
+            <li>
+                Last name: <b>{{ user.lastName }}</b>
+            </li>
+            <li>
+                Email: <b>{{ user.email }}</b>
+            </li>
+            <li>
+                Phone: <b>{{ user.phone }}</b>
+            </li>
+            <li>
+                Country: <b>{{ user.country.name }}</b>
+            </li>
+            <li>
+                Gender: <b>{{ user.gender }}</b>
+            </li>
+            <li>
+                Subscribe: <b>{{ user.subscribe }}</b>
+            </li>
+        </ul>
+    </div>
+    <hr />
+    <br />
+    <div class="example-button-row">
+        <a mat-flat-button color="primary" (click)="addTask(user, $event)">Add task</a>
+    </div>
+    <mat-accordion>
+        <mat-expansion-panel hideToggle *ngFor="let task of user.tasks; let i = index">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ task.title }}
+                </mat-panel-title>
+                <mat-panel-description>
+                    <a mat-button (click)="resolvedTask(task.id, $event)">Resolved</a>
+                    <a mat-button (click)="deleteTask(task, $event)">Delete</a>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>{{ task.description }}</p>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

@@ -1,0 +1,116 @@
+<h1 class="title">Angular reactive user form</h1>
+<mat-card class="example-card">
+    <form class="example-form" [formGroup]="reactiveForm" novalidate (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="standard" class="example-full-width">
+            <mat-label>First name</mat-label>
+            <input matInput formControlName="firstName" placeholder="Your first name" required />
+            <mat-error *ngIf="reactiveForm.get('firstName').hasError('required')"> First name is required </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" class="example-full-width">
+            <mat-label>Last name</mat-label>
+            <input matInput formControlName="lastName" placeholder="Your last name" required />
+            <mat-error *ngIf="reactiveForm.get('lastName').hasError('required')"> Last name is required </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input
+                type="email"
+                matInput
+                formControlName="emailFormControl"
+                [errorStateMatcher]="matcher"
+                placeholder="Ex. pat@example.com"
+                required
+            />
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error
+                *ngIf="reactiveForm.get('emailFormControl').hasError('email') && !reactiveForm.get('emailFormControl').hasError('required')"
+            >
+                Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="reactiveForm.get('emailFormControl').hasError('required')"> Email is required </mat-error>
+            <mat-error
+                *ngIf="reactiveForm.get('emailFormControl').touched && reactiveForm.get('emailFormControl').errors?.emailNotAvailable"
+            >
+                Email address is not available
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" class="example-full-width">
+            <mat-label>Telephone</mat-label>
+            <span matPrefix>+380 &nbsp;</span>
+            <input type="tel" matInput placeholder="99-555-55-77" formControlName="phone" required />
+            <mat-icon matSuffix>phone</mat-icon>
+            <mat-error *ngIf="reactiveForm.get('phone').hasError('required')"> Phone is required </mat-error>
+        </mat-form-field>
+
+        <div class="example-container">
+            <mat-form-field appearance="standard" [ngClass]="reactiveForm.get('countryControl').value?.flag ? 'flag' : 'country'">
+                <mat-label>Country</mat-label>
+                <span matPrefix>
+                    <img
+                        src="../../assets/flags/{{ reactiveForm.get('countryControl').value?.flag }}"
+                        *ngIf="reactiveForm.get('countryControl').value?.flag"
+                        alt=""
+                        class="img-flag"
+                    />
+                    &nbsp;
+                </span>
+                <mat-select formControlName="countryControl" required>
+                    <mat-option *ngFor="let country of countries" [value]="country">
+                        {{ country.name }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="reactiveForm.get('countryControl').hasError('required')"> Please choose an country </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="standard">
+                <mat-label>Select an gender</mat-label>
+                <mat-select formControlName="selectFormControl" required>
+                    <mat-option value="male">male</mat-option>
+                    <mat-option value="female">female</mat-option>
+                </mat-select>
+                <mat-error *ngIf="reactiveForm.get('selectFormControl').hasError('required')"> This field is required </mat-error>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" />
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="reactiveForm.get('password').touched && reactiveForm.get('password').errors?.required">
+                Password is required
+            </mat-error>
+            <mat-error *ngIf="reactiveForm.get('password').touched && reactiveForm.get('password').errors?.invalidPassword">
+                Password should have minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" />
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="reactiveForm.get('confirmPassword').touched && reactiveForm.get('confirmPassword').errors?.required">
+                Confirm Password is required
+            </mat-error>
+            <mat-error *ngIf="reactiveForm.get('confirmPassword').touched && reactiveForm.get('confirmPassword').errors?.passwordMismatch">
+                Passwords doesnot match
+            </mat-error>
+        </mat-form-field>
+
+        <section class="example-section">
+            <mat-checkbox class="example-margin" formControlName="subscribe" [checked]="checked">
+                Subscribe to the newsletter
+            </mat-checkbox>
+        </section>
+
+        <div class="example-button-row">
+            <button type="submit" mat-raised-button color="primary" [disabled]="reactiveForm.invalid">Submit</button>
+        </div>
+    </form>
+</mat-card>

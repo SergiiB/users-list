@@ -1,0 +1,30 @@
+.container {
+    padding: 20px 10px;
+}
+
+.card {
+    padding: 10px 0;
+}
+
+.example-button-row {
+    margin-bottom: 20px;
+}
+
+.task {
+    &-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+
+        &__link {
+            text-decoration: none;
+        }
+
+        &__number {
+            display: inline-block;
+            min-width: 20px;
+            margin-right: 10px;
+        }
+    }
+}
